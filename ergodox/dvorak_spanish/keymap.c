@@ -2,28 +2,32 @@
 #include "debug.h"
 #include "action_layer.h"
 
-// SPANISH DVORAK LAYOUT
-// Software layout must be set to spanish qwerty (so you can get 'ñ' and others)
-// Includes Auxiliary keys on layer 1 and full qwerty layout on layer 2
+/******************************************************************************************
+ * SPANISH DVORAK LAYOUT
+ * Layer 1: auxiliary keys
+ * Layer 2: full qwerty layout
+ ******************************************************************************************
+ * IMPORTANT: Software layout must be set to SPANISH QWERTY to work properly
+ *****************************************************************************************/
 
 // LAYERS
-#define BASE 0 // default layout
-#define AUX 1 // auxiliary keys
-#define QWERTY 2 // qwerty layout
+#define BASE    0 // dvorak layout (default)
+#define AUX     1 // auxiliary keys
+#define QWERTY  2 // qwerty layout
 
 // MACROS
 #define OBRACE 0 // key { or shift
 #define CBRACE 1 // key } or shift
 #define OBRACK 2 // key [ or left alt
 #define CBRACK 3 // key ] or left alt
-#define CAPS 4 // caps lock
+#define CAPS   4 // caps lock
 
 // LEDS
-#define USB_LED_NUM_LOCK                0
-#define USB_LED_CAPS_LOCK               1
-#define USB_LED_SCROLL_LOCK             2
-#define USB_LED_COMPOSE                 3
-#define USB_LED_KANA                    4
+#define USB_LED_NUM_LOCK    0
+#define USB_LED_CAPS_LOCK   1
+#define USB_LED_SCROLL_LOCK 2
+#define USB_LED_COMPOSE     3
+#define USB_LED_KANA        4
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base layer
@@ -32,8 +36,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |   \    |   1  |   2  |   3  |   4  |   5  |  <>  |           |   ¡  |   6  |   7  |   8  |   9  |   0  |   '    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | F1/~L1 |   .  |   ,  |   Ñ  |   P  |   Y  |MEH_T |           |ALL_T |   F  |   G  |   C  |   H  |   L  | L1/~L1 |
- * |--------+------+------+------+------+------|  +   |           | DEL  |------+------+------+------+------+--------|
+ * | F1/~L1 |   .  |   ,  |   Ñ  |   P  |   Y  |MEH_T |           |  L1  |   F  |   G  |   C  |   H  |   L  |ALL_T/+ |
+ * |--------+------+------+------+------+------| DEL  |           | ~L1  |------+------+------+------+------+--------|
  * |Esc/Ctrl|   A  |   O  |   E  |   U  |   I  |------|           |------|   D  |   R  |   T  |   N  |   S  |'/RCtrl |
  * |--------+------+------+------+------+------| LGUI |           | RALT |------+------+------+------+------+--------|
  * | {/LSft |   -  |   Q  |   J  |   K  |   X  |      |           |      |   B  |   M  |   W  |   V  |   Z  | }/RSft |
@@ -43,68 +47,68 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,-------------.       ,-------------.
  *                                        |  F5  |  F6  |       |  F7  |  F8  |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |  F2  |       |  F11 |        |      |
+ *                                 |      |      |  F4  |       |  F11 |        |      |
  *                                 | BSPC | TAB  |------|       |------|  ENTER | SPACE|
- *                                 |      |      |F3/Salt|    |F12/Salt|        |      |
+ *                                 |      |      |F3/SA |       |F12/SA|        |      |
  *                                 `--------------------'       `----------------------'
  */
 [BASE] = KEYMAP(
         // left hand
-        KC_GRAVE,       KC_1,            KC_2,    KC_3,   KC_4,   KC_5,   KC_NONUS_BSLASH,
-        LT(AUX, KC_F1),   KC_DOT,          KC_COMM, KC_SCLN,KC_P,   KC_Y,   MEH_T(KC_RBRACKET),
-        CTL_T(KC_ESC),  KC_A,            KC_O,    KC_E,   KC_U,   KC_I,
-        M(OBRACE),      KC_SLSH,         KC_Q,    KC_J,   KC_K,   KC_X,   KC_LGUI,
-        M(OBRACK),      KC_HOME,         KC_PGDN, KC_PGUP,  KC_END,
-                                                                    KC_F5,  LT(AUX, KC_F6),
-                                                                                 KC_F2,
-                                        KC_BSPC,KC_TAB,MT((MOD_LALT | MOD_LSFT), KC_F3),
+        KC_GRAVE,       KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_NONUS_BSLASH,
+        LT(AUX, KC_F1), KC_DOT, KC_COMM,KC_SCLN,KC_P,   KC_Y,   MEH_T(KC_DEL),
+        CTL_T(KC_ESC),  KC_A,   KC_O,   KC_E,   KC_U,   KC_I,
+        M(OBRACE),      KC_SLSH,KC_Q,   KC_J,   KC_K,   KC_X,   KC_LGUI,
+        M(OBRACK),      KC_HOME,KC_PGDN,KC_PGUP,KC_END,
+                                                                   KC_F5,  LT(AUX, KC_F6),
+                                                                                    KC_F4,
+                                          KC_BSPC,KC_TAB,MT((MOD_LALT | MOD_LSFT), KC_F3),
         // right hand
-             KC_EQL,            KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINUS,
-             ALL_T(KC_DEL),     KC_F,   KC_G,   KC_C,   KC_H,   KC_L,   KC_FN1,
-                                KC_D,   KC_R,   KC_T,   KC_N,   KC_S,   CTL_T(KC_QUOTE),
-             KC_RALT,KC_B,      KC_M,   KC_W,   KC_V,   KC_Z,   M(CBRACE),
-                                        KC_LEFT,KC_DOWN,KC_UP,  KC_RGHT,M(CBRACK),
-            KC_F7, KC_F8,
-            KC_F11,
-            MT(MOD_LALT | MOD_LSFT, KC_F12),KC_ENT, KC_SPC
+                    KC_EQL,    KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINUS,
+                    KC_FN1,    KC_F,   KC_G,   KC_C,   KC_H,   KC_L,   ALL_T(KC_RBRACKET),
+                               KC_D,   KC_R,   KC_T,   KC_N,   KC_S,   CTL_T(KC_QUOTE),
+                    KC_RALT,   KC_B,   KC_M,   KC_W,   KC_V,   KC_Z,   M(CBRACE),
+                                       KC_LEFT,KC_DOWN,KC_UP,  KC_RGHT,M(CBRACK),
+        KC_F7, KC_F8,
+        KC_F11,
+        MT(MOD_LALT | MOD_LSFT, KC_F12),KC_ENT, KC_SPC
     ),
 /* Keymap 1: Aux layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |        |  F1  |  F2  |  F3  |  F4  |  F5  | SLEEP            | PWR  |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      | MsUp |      |      |      |           |      |   Up |   7  |   8  |   9  |   *  |  ~L0   |
+ * |        |  <   |  >   | MsUp |      |      |      |           | ~L0  |      |   7  |   8  |   9  |   *  |  `^    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |MsLeft|MsDown|MsRght|      |------|           |------| Down |   4  |   5  |   6  |   +  |  `^    |
+ * |        |      |MsLeft|MsDown|MsRght|      |------|           |------|      |   4  |   5  |   6  |   +  |   Ç    |
  * |--------+------+------+------+------+------|      |           |PSCR  |------+------+------+------+------+--------|
- * |CAPSLOCK|      |      |      |      |      |      |           |      |   &  |   1  |   2  |   3  |   \  |        |
+ * |CAPSLOCK|      |      |      |      |      |      |           |      |      |   1  |   2  |   3  |   /  |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      | Lclk | Rclk |                                       |      |    . |   0  |   =  |      |
+ *   |      |CTRL-Z|CTRL-X|CTRL-C|CTRL-V|                                       |      |    . |   0  |   =  |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        |      |      |       | Prev | Next |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      |      |       | VolUp|      |      |
- *                                 |      |      |------|       |------| Play | Stop |
+ *                                 | Lclk | Rclk |------|       |------| Play | Stop |
  *                                 |      |      |  L2  |       | VolDn|      |      |
  *                                 `--------------------'       `--------------------'
  */
 [AUX] = KEYMAP(
        // left hand
-       KC_TRNS,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_SLEP,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_MS_U, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_MS_L, KC_MS_D, KC_MS_R, KC_TRNS,
-       M(CAPS), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-       KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_BTN2,
-                                           KC_TRNS, KC_TRNS,
-                                                    KC_TRNS,
-                                  KC_TRNS, KC_TRNS, TG(QWERTY),
+       KC_NO  , KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  KC_SLEP,
+       KC_TRNS, KC_NONUS_BSLASH, LSFT(KC_NONUS_BSLASH), KC_MS_U, KC_NO, KC_NO, KC_NO,
+       KC_NO  , KC_NO, KC_MS_L, KC_MS_D, KC_MS_R, KC_NO  ,
+       M(CAPS), KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO,
+       KC_NO  , LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V),
+                                                              KC_NO  , KC_NO,
+                                                                       KC_NO,
+                                                KC_BTN1, KC_BTN2, TG(QWERTY),
        // right hand
-       KC_PWR,  KC_F6,   KC_F7,  KC_F8,   KC_F9,   KC_F10,  KC_F11,
-       KC_TRNS, KC_UP,   KC_7,   KC_8,    KC_9,    KC_ASTR, KC_TRNS,
-                KC_DOWN, KC_4,   KC_5,    KC_6,    KC_PLUS, KC_LBRACKET,
-       KC_PSCR, KC_AMPR, KC_1,   KC_2,    KC_3,    KC_BSLS, KC_TRNS,
-                         KC_TRNS,KC_DOT,  KC_0,    KC_EQL,  KC_TRNS,
+            KC_PWR,  KC_F6,   KC_F7,  KC_F8,  KC_F9,   KC_F10,  KC_F11,
+            KC_TRNS, KC_NO,   KC_7,   KC_8,   KC_9,    KC_PAST, KC_LBRACKET,
+                     KC_NO,   KC_4,   KC_5,   KC_6,    KC_PPLS, KC_BSLASH,
+            KC_PSCR, KC_NO,   KC_1,   KC_2,   KC_3,    KC_PSLS, KC_NO,
+                              KC_NO  ,KC_DOT, KC_0,    KC_PEQL, KC_NO,
        KC_MPRV, KC_MNXT,
        KC_VOLU,
        KC_VOLD, KC_MPLY, KC_MSTP
@@ -114,8 +118,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * |   \    |   1  |   2  |   3  |   4  |   5  |  <>  |           |   ¡  |   6  |   7  |   8  |   9  |   0  |   '    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |    F1  |   Q  |   W  |   E  |   R  |   T  |MEH_T |           |ALL_T |   Y  |   U  |   I  |   O  |   P  |        |
- * |--------+------+------+------+------+------|  +   |           | DEL  |------+------+------+------+------+--------|
+ * |  TRANS |   Q  |   W  |   E  |   R  |   T  |MEH_T |           | TRANS|   Y  |   U  |   I  |   O  |   P  |ALL_T/+ |
+ * |--------+------+------+------+------+------| DEL  |           |      |------+------+------+------+------+--------|
  * |Esc/Ctrl|   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   Ñ  |'/RCtrl |
  * |--------+------+------+------+------+------| LGUI |           | RALT |------+------+------+------+------+--------|
  * | {/LSft |   Z  |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |   -  | }/RSft |
@@ -123,32 +127,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |[/LALT| HOME |PGDOWN| PGUP | END  |                                       | LEFT | DOWN |  UP  |RIGHT |]/LALT|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |  F5  |  F6  |       |  F7  |  F8  |
+ *                                        |  F5  | TRANS|       |  F7  |  F8  |
  *                                 ,------|------|------|       |------+--------+------.
- *                                 |      |      |  F2  |       |  F11 |        |      |
+ *                                 |      |      |  F4  |       |  F11 |        |      |
  *                                 | BSPC | TAB  |------|       |------|  ENTER | SPACE|
- *                                 |      |      |  L1  |     |F12/Salt|        |      |
+ *                                 |      |      |TRANS |       |F12/SA|        |      |
  *                                 `--------------------'       `----------------------'
  */
 [QWERTY] = KEYMAP(
         // left hand
-        KC_GRAVE,       KC_1,         KC_2,    KC_3,   KC_4,   KC_5,   KC_NONUS_BSLASH,
-        LT(AUX, KC_F1),   KC_Q,         KC_W,    KC_E,   KC_R,   KC_T,   MEH_T(KC_RBRACKET),
-        CTL_T(KC_ESC),  KC_A,         KC_S,    KC_D,   KC_F,   KC_G,
-        M(OBRACE),      KC_Z,         KC_X,    KC_C,   KC_V,   KC_B,   KC_LGUI,
-        M(OBRACK),      KC_HOME,      KC_PGDN,  KC_PGUP,  KC_END,
-                                                                KC_F5,  KC_F6,
-                                                                        KC_F2,
-                                                        KC_BSPC,KC_TAB,KC_TRNS,
+        KC_GRAVE,       KC_1,   KC_2,   KC_3,   KC_4,   KC_5,   KC_NONUS_BSLASH,
+        KC_TRNS,        KC_Q,   KC_W,   KC_E,   KC_R,   KC_T,   MEH_T(KC_DEL),
+        CTL_T(KC_ESC),  KC_A,   KC_S,   KC_D,   KC_F,   KC_G,
+        M(OBRACE),      KC_Z,   KC_X,   KC_C,   KC_V,   KC_B,   KC_LGUI,
+        M(OBRACK),      KC_HOME,KC_PGDN,KC_PGUP,KC_END,
+                                                                          KC_F5,  KC_TRNS,
+                                                                                    KC_F4,
+                                                                   KC_BSPC,KC_TAB,KC_TRNS,
         // right hand
-             KC_EQL,            KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINUS,
-             ALL_T(KC_DEL),     KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   KC_FN1,
-                                KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,   CTL_T(KC_QUOTE),
-            KC_RALT,KC_N,   KC_M,   KC_COMM,   KC_DOT,   KC_SLSH,   M(CBRACE),
-                                        KC_LEFT,KC_DOWN,KC_UP,  KC_RGHT,M(CBRACK),
-            KC_F7, KC_F8,
-            KC_F11,
-            MT(MOD_LALT | MOD_LSFT, KC_F12),KC_ENT, KC_SPC
+                    KC_EQL,    KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_MINUS,
+                    KC_TRNS,   KC_Y,   KC_U,   KC_I,   KC_O,   KC_P,   ALL_T(KC_RBRACKET),
+                               KC_H,   KC_J,   KC_K,   KC_L,   KC_SCLN,CTL_T(KC_QUOTE),
+                    KC_RALT,   KC_N,   KC_M,   KC_COMM,KC_DOT, KC_SLSH,M(CBRACE),
+                                       KC_LEFT,KC_DOWN,KC_UP,  KC_RGHT,M(CBRACK),
+        KC_F7, KC_F8,
+        KC_F11,
+        MT(MOD_LALT | MOD_LSFT, KC_F12),KC_ENT, KC_SPC
 ),
 };
 
